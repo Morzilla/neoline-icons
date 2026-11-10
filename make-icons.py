@@ -82,6 +82,9 @@ P = {
     "file-mail": ["M3.5 5.5h17v13h-17z", "m3.5 7 8.5 6 8.5-6"],
     "file-calendar": ["M4.5 5.5h15v14h-15z", "M4.5 10h15M8.5 3.5v4M15.5 3.5v4"],
     "file-sub": ["M4.5 5.5h15v13h-15z", "M7.5 12h9M7.5 15h5"],
+    "file-database": ["M5 6.5c0-1.7 3.1-3 7-3s7 1.3 7 3-3.1 3-7 3-7-1.3-7-3z", "M5 6.5v11c0 1.7 3.1 3 7 3s7-1.3 7-3v-11", "M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3"],
+    "file-key": ["M8 11.500a4 4 0 1 0 0 8 4 4 0 0 0 0-8z", "m11 12.5 8.5-8.5", "m16 7.5 2.5 2.500M18.5 5l2 2"],
+    "file-notebook": ["M6.5 3.500h12v17h-12z", "M4.5 7.500h4M4.5 12h4M4.5 16.500h4", "M11.5 9h4M11.5 12.500h4"],
     # actions (monochrome)
     "view-grid": ["M4.5 4.5h6v6h-6zM13.5 4.5h6v6h-6zM4.5 13.5h6v6h-6zM13.5 13.5h6v6h-6z"],
     "view-list-icons": ["M4.5 4.5h4v4h-4zM10 4.5h4v4h-4zM15.5 4.5h4v4h-4zM4.5 10h4v4h-4zM10 10h4v4h-4zM15.5 10h4v4h-4zM4.5 15.5h4v4h-4zM10 15.5h4v4h-4zM15.5 15.5h4v4h-4z"],
@@ -223,6 +226,40 @@ MIMES = {
     "application-octet-stream": ("file-unknown", "text"), "application-x-zerosize": ("file", "text"), "inode-symlink": ("link", "text"),
     "application-x-trash": ("trash", "trash"), "application-x-kgetlist": ("file-torrent", "net"),
 }
+
+MIMES.update({
+    "application-sql": ("file-database", "code"), "text-x-sql": ("file-database", "code"), "application-x-sqlite3": ("file-database", "code"),
+    "application-vnd.sqlite3": ("file-database", "code"), "application-x-sqlite2": ("file-database", "code"), "application-vnd.oasis.opendocument.database": ("file-database", "code"),
+    "application-x-php": ("file-source", "code"), "text-x-php": ("file-source", "code"), "text-x-lua": ("file-source", "code"), "text-x-ruby": ("file-source", "code"),
+    "application-x-ruby": ("file-source", "code"), "text-x-csharp": ("file-source", "code"), "application-x-perl": ("file-source", "code"), "text-x-kotlin": ("file-source", "code"),
+    "text-x-qml": ("file-source", "code"), "text-x-scala": ("file-source", "code"), "text-x-haskell": ("file-source", "code"), "text-x-objcsrc": ("file-source", "code"),
+    "text-x-dart": ("file-source", "code"), "text-x-swift": ("file-source", "code"), "text-x-vue": ("file-source", "code"), "text-jsx": ("file-source", "code"),
+    "text-tsx": ("file-source", "code"), "application-typescript": ("file-source", "code"), "application-wasm": ("file-exe", "exe"), "text-x-tex": ("file-text", "text"),
+    "text-x-dockerfile": ("file-script", "code"), "text-x-systemd-unit": ("file-config", "text"), "application-x-ipynb+json": ("file-notebook", "code"),
+    "application-x-java-archive": ("file-package", "pkg"), "application-vnd.android.package-archive": ("file-package", "pkg"), "application-x-java": ("file-exe", "exe"),
+    "application-x-msi": ("file-package", "pkg"), "application-x-apple-diskimage": ("file-disk-image", "disk"), "application-x-virtualbox-vdi": ("file-disk-image", "disk"),
+    "application-x-virtualbox-vmdk": ("file-disk-image", "disk"), "application-x-qemu-disk": ("file-disk-image", "disk"),
+    "image-vnd.adobe.photoshop": ("file-image", "img"), "image-x-kra": ("file-image", "img"), "application-x-krita": ("file-image", "img"), "image-x-icon": ("file-image", "img"),
+    "image-vnd.microsoft.icon": ("file-image", "img"), "image-jxl": ("file-image", "img"), "image-x-dcraw": ("file-image", "img"), "image-x-eps": ("file-vector", "img"),
+    "application-illustrator": ("file-vector", "img"), "application-x-blender": ("file-package", "img"), "model-stl": ("file-package", "img"), "model-obj": ("file-package", "img"),
+    "video-x-flv": ("file-video", "vid"), "video-x-ms-wmv": ("file-video", "vid"), "video-3gpp": ("file-video", "vid"), "video-mp2t": ("file-video", "vid"), "video-ogg": ("file-video", "vid"),
+    "audio-midi": ("file-audio", "aud"), "audio-x-ms-wma": ("file-audio", "aud"), "audio-x-m4a": ("file-audio", "aud"), "audio-x-aiff": ("file-audio", "aud"), "audio-x-mpegurl": ("file-audio", "aud"),
+    "audio-webm": ("file-audio", "aud"), "audio-x-flac": ("file-audio", "aud"), "audio-x-mp3": ("file-audio", "aud"),
+    "application-x-x509-ca-cert": ("file-key", "pdf"), "application-pgp-keys": ("file-key", "pdf"), "application-x-pem-key": ("file-key", "pdf"), "application-pkcs12": ("file-key", "pdf"),
+    "application-pgp-encrypted": ("file-key", "pdf"), "application-pgp-signature": ("file-key", "pdf"), "application-x-kdbx": ("file-key", "pdf"), "application-x-keepass2": ("file-key", "pdf"),
+    "application-vnd.ms-outlook": ("file-mail", "doc"), "application-mbox": ("file-mail", "doc"), "application-x-mswinurl": ("link", "web"), "application-x-mobipocket-ebook": ("file-ebook", "pdf"),
+    "image-vnd.djvu": ("file-ebook", "pdf"), "application-vnd.comicbook+zip": ("file-ebook", "pdf"), "application-x-cbr": ("file-ebook", "pdf"),
+    "application-vnd.ms-excel.sheet.macroenabled.12": ("file-sheet", "sheet"), "application-vnd.oasis.opendocument.graphics": ("file-vector", "img"),
+    "application-vnd.visio": ("file-vector", "img"), "application-x-gzip": ("file-archive", "arc"), "application-x-bzip2": ("file-archive", "arc"), "application-x-lz4": ("file-archive", "arc"),
+    "application-x-zstd": ("file-archive", "arc"), "application-x-compress": ("file-archive", "arc"), "application-x-lzip": ("file-archive", "arc"), "application-vnd.ms-cab-compressed": ("file-archive", "arc"),
+    "application-x-ace": ("file-archive", "arc"), "application-x-arj": ("file-archive", "arc"), "text-x-nfo": ("file-text", "text"), "text-rtf": ("file-text", "doc"), "text-x-changelog": ("file-log", "text"),
+    "text-x-copying": ("file-text", "text"), "text-x-authors": ("file-text", "text"), "text-x-install": ("file-text", "text"), "text-x-po": ("file-text", "text"), "text-x-bibtex": ("file-text", "text"),
+    "text-x-hex": ("file-code", "code"), "application-x-core": ("file-unknown", "text"), "application-x-partial-download": ("download", "net"), "text-x-diff": ("file-source", "code"),
+    "application-x-m4": ("file-script", "code"), "text-x-meson": ("file-script", "code"), "application-x-awk": ("file-script", "code"), "application-x-fictionbook+xml": ("file-ebook", "pdf"),
+    "text-x-opml+xml": ("file-code", "code"), "application-rss+xml": ("file-code", "code"), "application-atom+xml": ("file-code", "code"), "text-xsl": ("file-code", "code"),
+    "application-xslt+xml": ("file-code", "code"), "text-x-scss": ("file-code", "code"), "text-x-sass": ("file-code", "code"), "text-x-less": ("file-code", "code"), "text-vtt": ("file-sub", "vid"),
+    "application-x-tgif": ("file-vector", "img"), "application-x-theme": ("file-config", "text"), "text-x-credits": ("file-text", "text"), "application-vnd.efi.iso": ("file-disk-image", "disk"),
+})
 ACTIONS = [k for k in P if k.startswith(("view-", "go-", "edit-", "folder-new", "document-", "list-", "dialog-", "window-", "tab-", "application-menu",
                                           "configure", "zoom-", "bookmarks", "help-", "media-", "audio-", "mail-", "link", "emblem-", "show-menu", "overflow-menu",
                                           "process-stop", "kt-", "system-run", "preferences-", "tag", "flag", "rating", "image-x-generic-symbolic"))]
@@ -283,7 +320,7 @@ def build(theme):
              "Inherits=breeze-dark-mod-outline-places,breeze-dark,breeze,hicolor", "Example=folder", "FollowsColorScheme=true",
              "Directories=" + ",".join(dirs), ""]
     for d in dirs:
-        index += [f"[{d}]", "Size=24", "Type=Scalable", "MinSize=8", "MaxSize=512", "Context=" + d.split("/")[1].capitalize(), ""]
+        index += [f"[{d}]", "Size=24", "Type=Scalable", "MinSize=8", "MaxSize=512", "Context=" + {"mimetypes": "MimeTypes"}.get(d.split("/")[1], d.split("/")[1].capitalize()), ""]
     write(os.path.join(OUT, "index.theme"), "\n".join(index))
 
     if os.path.islink(INSTALL) or os.path.isdir(INSTALL):

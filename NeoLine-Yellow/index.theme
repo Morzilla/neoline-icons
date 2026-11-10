@@ -1,0 +1,35 @@
+[Icon Theme]
+Name=NeoLine Yellow
+Comment=Outline icons in the style of the Dolphin NG cards
+Inherits=breeze-dark-mod-outline-places,breeze-dark,breeze,hicolor
+Example=folder
+FollowsColorScheme=true
+Directories=scalable/actions,scalable/places,scalable/mimetypes,scalable/devices
+
+[scalable/actions]
+Size=24
+Type=Scalable
+MinSize=8
+MaxSize=512
+Context=Actions
+
+[scalable/places]
+Size=24
+Type=Scalable
+MinSize=8
+MaxSize=512
+Context=Places
+
+[scalable/mimetypes]
+Size=24
+Type=Scalable
+MinSize=8
+MaxSize=512
+Context=Mimetypes
+
+[scalable/devices]
+Size=24
+Type=Scalable
+MinSize=8
+MaxSize=512
+Context=Devices

@@ -248,7 +248,21 @@ def write(path, text):
         f.write(text)
 
 
+# the variants: the name of the theme and one colour for every place and file type (None = the colour of its kind)
+VARIANTS = {"NeoLine": None, "NeoLine-White": "#e8e8e8", "NeoLine-Yellow": "#e8c14e"}
+
+
 def main():
+    global OUT, INSTALL, C
+    kinds = dict(C)
+    for theme, single in VARIANTS.items():
+        OUT = os.path.join(HERE, theme)
+        INSTALL = os.path.expanduser("~/.local/share/icons/" + theme)
+        C = {k: (single or v) for k, v in kinds.items()}
+        build(theme)
+
+
+def build(theme):
     if os.path.isdir(OUT):
         shutil.rmtree(OUT)
     sheet = []
@@ -265,7 +279,7 @@ def main():
         drawing, kind = PLACES[name]
         write(os.path.join(OUT, "scalable", "devices", name + ".svg"), svg(P[drawing], C[kind]))
     dirs = ["scalable/actions", "scalable/places", "scalable/mimetypes", "scalable/devices"]
-    index = ["[Icon Theme]", "Name=NeoLine", "Comment=Outline icons in the style of the Dolphin NG cards",
+    index = ["[Icon Theme]", "Name=" + theme.replace("-", " "), "Comment=Outline icons in the style of the Dolphin NG cards",
              "Inherits=breeze-dark-mod-outline-places,breeze-dark,breeze,hicolor", "Example=folder", "FollowsColorScheme=true",
              "Directories=" + ",".join(dirs), ""]
     for d in dirs:
@@ -281,7 +295,7 @@ def main():
     shutil.copytree(OUT, INSTALL)
     print(f"{len(sheet)} icons -> {OUT} and {INSTALL}")
 
-    if "--sheet" in sys.argv:
+    if "--sheet" in sys.argv and theme == "NeoLine":
         cells = "".join(f'<figure title="{n}"><div class="ic">{s}</div><figcaption>{n}</figcaption></figure>' for _, n, s in sheet)
         html = ("<title>NeoLine Icons</title><style>:root{color-scheme:dark}body{margin:0;background:#1b1d20;color:#9ea2a8;font:12px/1.3 'Noto Sans',sans-serif;"
                 "padding:24px max(16px,env(safe-area-inset-right,0px)) 48px max(16px,env(safe-area-inset-left,0px))}h1{color:#dfdfdf;font-size:20px;font-weight:600;margin:0 0 4px}"

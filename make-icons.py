@@ -299,6 +299,15 @@ def main():
         build(theme)
 
 
+def inherits():
+    """Breeze Dark, preceded by the local variants of it that are installed (they keep their own drawings as fallback)."""
+    found = []
+    for name in ("breeze-dark-mod-outline-places", "breeze-dark-mod"):
+        if any(os.path.isdir(os.path.join(base, name)) for base in (os.path.expanduser("~/.local/share/icons"), "/usr/share/icons")):
+            found.append(name)
+    return found + ["breeze-dark", "breeze", "hicolor"]
+
+
 def build(theme):
     if os.path.isdir(OUT):
         shutil.rmtree(OUT)
@@ -317,7 +326,7 @@ def build(theme):
         write(os.path.join(OUT, "scalable", "devices", name + ".svg"), svg(P[drawing], C[kind]))
     dirs = ["scalable/actions", "scalable/places", "scalable/mimetypes", "scalable/devices"]
     index = ["[Icon Theme]", "Name=" + theme.replace("-", " "), "Comment=Outline icons in the style of the Dolphin NG cards",
-             "Inherits=breeze-dark-mod-outline-places,breeze-dark,breeze,hicolor", "Example=folder", "FollowsColorScheme=true",
+             "Inherits=" + ",".join(inherits()), "Example=folder", "FollowsColorScheme=true",
              "Directories=" + ",".join(dirs), ""]
     for d in dirs:
         index += [f"[{d}]", "Size=24", "Type=Scalable", "MinSize=8", "MaxSize=512", "Context=" + {"mimetypes": "MimeTypes"}.get(d.split("/")[1], d.split("/")[1].capitalize()), ""]

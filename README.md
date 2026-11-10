@@ -4,8 +4,8 @@ An outline icon theme for KDE Plasma: 24 px grid, 1.7 px round strokes. Action i
 places and file types come in three variants:
 
 - **NeoLine** – each kind in its own colour
-- **NeoLine White** – all white
-- **NeoLine Yellow** – all yellow
+- **NeoLine White** – places and devices in white, file types in colour
+- **NeoLine Yellow** – places and devices in yellow, file types in colour
 
 Everything it does not draw is inherited from Breeze Dark.
 

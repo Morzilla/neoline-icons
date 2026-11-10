@@ -285,8 +285,11 @@ def write(path, text):
         f.write(text)
 
 
-# the variants: the name of the theme and one colour for every place and file type (None = the colour of its kind)
+# the variants: the name of the theme and one colour for every place and device (None = the colour of its kind)
 VARIANTS = {"NeoLine": None, "NeoLine-White": "#e8e8e8", "NeoLine-Yellow": "#e8c14e"}
+
+
+KINDS = dict(C)
 
 
 def main():
@@ -319,8 +322,9 @@ def build(theme):
         write(os.path.join(OUT, "scalable", "places", name + ".svg"), svg(P[drawing], C[kind]))
         sheet.append(("places", name, svg(P[drawing], C[kind])))
     for name, (drawing, kind) in MIMES.items():
-        write(os.path.join(OUT, "scalable", "mimetypes", name + ".svg"), svg(P[drawing], C[kind]))
-        sheet.append(("mimetypes", name, svg(P[drawing], C[kind])))
+        # file types keep the colour of their kind in every variant: only places and devices change
+        write(os.path.join(OUT, "scalable", "mimetypes", name + ".svg"), svg(P[drawing], KINDS[kind]))
+        sheet.append(("mimetypes", name, svg(P[drawing], KINDS[kind])))
     for name in ("drive-harddisk", "drive-removable-media", "media-optical", "smartphone", "computer", "network-server"):
         drawing, kind = PLACES[name]
         write(os.path.join(OUT, "scalable", "devices", name + ".svg"), svg(P[drawing], C[kind]))

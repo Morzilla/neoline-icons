@@ -19,9 +19,9 @@ INSTALL = os.path.expanduser("~/.local/share/icons/NeoLine")
 
 # ---- the palette of kinds (as in Dolphin NG's cards)
 C = {
-    "dir": "#4f93d9", "img": "#5b7bb0", "vid": "#a66b9c", "aud": "#c98a4b", "arc": "#c0894b", "doc": "#8f99a6",
-    "sheet": "#5e9c6a", "pres": "#d08457", "code": "#c9a24d", "pdf": "#d06060", "pkg": "#8a6fc9", "exe": "#6aa0b8",
-    "text": "#9aa3ad", "gif": "#c86f6f", "web": "#4fa3c9", "font": "#b48ead", "disk": "#8fa0b3", "trash": "#8f99a6", "net": "#5ba3a3",
+    "dir": "#4f93d9", "img": "#5b7bb0", "vid": "#a66b9c", "aud": "#c98a4b", "arc": "#c0894b", "doc": "#4a8fe0", "mail": "#8f99a6",
+    "sheet": "#4caf6a", "pres": "#e07a45", "code": "#c9a24d", "pdf": "#e0524a", "pkg": "#8a6fc9", "exe": "#6aa0b8",
+    "text": "#9aa3ad", "gif": "#c86f6f", "web": "#4fa3c9", "font": "#b48ead", "book": "#b08a5a", "key": "#d9b44a", "disk": "#8fa0b3", "trash": "#8f99a6", "net": "#5ba3a3",
 }
 
 # ---- the drawings: SVG path data on the 24 grid (stroke only; "fill" entries are drawn filled)
@@ -195,7 +195,7 @@ MIMES = {
     "application-vnd.rar": ("file-archive", "arc"), "application-x-rar": ("file-archive", "arc"), "application-gzip": ("file-archive", "arc"),
     "application-x-bzip": ("file-archive", "arc"), "application-x-xz": ("file-archive", "arc"), "application-zstd": ("file-archive", "arc"),
     "application-x-archive": ("file-archive", "arc"), "application-x-lzma": ("file-archive", "arc"), "application-x-cpio": ("file-archive", "arc"),
-    "application-pdf": ("file-pdf", "pdf"), "application-epub+zip": ("file-ebook", "pdf"), "application-postscript": ("file-pdf", "pdf"),
+    "application-pdf": ("file-pdf", "pdf"), "application-epub+zip": ("file-ebook", "book"), "application-postscript": ("file-pdf", "pdf"),
     "text-plain": ("file-text", "text"), "text-x-generic": ("file-text", "text"), "text-x-readme": ("file-text", "text"),
     "text-x-log": ("file-log", "text"), "text-markdown": ("file-markdown", "text"), "text-csv": ("file-sheet", "sheet"),
     "text-html": ("file-web", "web"), "application-xhtml+xml": ("file-web", "web"), "text-xml": ("file-code", "code"), "application-xml": ("file-code", "code"),
@@ -221,7 +221,7 @@ MIMES = {
     "application-vnd.ms-powerpoint": ("file-pres", "pres"), "application-vnd.openxmlformats-officedocument.presentationml.presentation": ("file-pres", "pres"),
     "application-vnd.oasis.opendocument.presentation": ("file-pres", "pres"), "x-office-presentation": ("file-pres", "pres"),
     "font-x-generic": ("file-font", "font"), "font-ttf": ("file-font", "font"), "font-otf": ("file-font", "font"), "font-woff": ("file-font", "font"), "application-x-font-ttf": ("file-font", "font"),
-    "message-rfc822": ("file-mail", "doc"), "text-calendar": ("file-calendar", "doc"), "text-vcard": ("file-text", "doc"),
+    "message-rfc822": ("file-mail", "mail"), "text-calendar": ("file-calendar", "mail"), "text-vcard": ("file-text", "mail"),
     "application-x-subrip": ("file-sub", "vid"), "text-x-ssa": ("file-sub", "vid"), "unknown": ("file-unknown", "text"),
     "application-octet-stream": ("file-unknown", "text"), "application-x-zerosize": ("file", "text"), "inode-symlink": ("link", "text"),
     "application-x-trash": ("trash", "trash"), "application-x-kgetlist": ("file-torrent", "net"),
@@ -245,17 +245,17 @@ MIMES.update({
     "video-x-flv": ("file-video", "vid"), "video-x-ms-wmv": ("file-video", "vid"), "video-3gpp": ("file-video", "vid"), "video-mp2t": ("file-video", "vid"), "video-ogg": ("file-video", "vid"),
     "audio-midi": ("file-audio", "aud"), "audio-x-ms-wma": ("file-audio", "aud"), "audio-x-m4a": ("file-audio", "aud"), "audio-x-aiff": ("file-audio", "aud"), "audio-x-mpegurl": ("file-audio", "aud"),
     "audio-webm": ("file-audio", "aud"), "audio-x-flac": ("file-audio", "aud"), "audio-x-mp3": ("file-audio", "aud"),
-    "application-x-x509-ca-cert": ("file-key", "pdf"), "application-pgp-keys": ("file-key", "pdf"), "application-x-pem-key": ("file-key", "pdf"), "application-pkcs12": ("file-key", "pdf"),
-    "application-pgp-encrypted": ("file-key", "pdf"), "application-pgp-signature": ("file-key", "pdf"), "application-x-kdbx": ("file-key", "pdf"), "application-x-keepass2": ("file-key", "pdf"),
-    "application-vnd.ms-outlook": ("file-mail", "doc"), "application-mbox": ("file-mail", "doc"), "application-x-mswinurl": ("link", "web"), "application-x-mobipocket-ebook": ("file-ebook", "pdf"),
-    "image-vnd.djvu": ("file-ebook", "pdf"), "application-vnd.comicbook+zip": ("file-ebook", "pdf"), "application-x-cbr": ("file-ebook", "pdf"),
+    "application-x-x509-ca-cert": ("file-key", "key"), "application-pgp-keys": ("file-key", "key"), "application-x-pem-key": ("file-key", "key"), "application-pkcs12": ("file-key", "key"),
+    "application-pgp-encrypted": ("file-key", "key"), "application-pgp-signature": ("file-key", "key"), "application-x-kdbx": ("file-key", "key"), "application-x-keepass2": ("file-key", "key"),
+    "application-vnd.ms-outlook": ("file-mail", "mail"), "application-mbox": ("file-mail", "mail"), "application-x-mswinurl": ("link", "web"), "application-x-mobipocket-ebook": ("file-ebook", "book"),
+    "image-vnd.djvu": ("file-ebook", "book"), "application-vnd.comicbook+zip": ("file-ebook", "book"), "application-x-cbr": ("file-ebook", "book"),
     "application-vnd.ms-excel.sheet.macroenabled.12": ("file-sheet", "sheet"), "application-vnd.oasis.opendocument.graphics": ("file-vector", "img"),
     "application-vnd.visio": ("file-vector", "img"), "application-x-gzip": ("file-archive", "arc"), "application-x-bzip2": ("file-archive", "arc"), "application-x-lz4": ("file-archive", "arc"),
     "application-x-zstd": ("file-archive", "arc"), "application-x-compress": ("file-archive", "arc"), "application-x-lzip": ("file-archive", "arc"), "application-vnd.ms-cab-compressed": ("file-archive", "arc"),
     "application-x-ace": ("file-archive", "arc"), "application-x-arj": ("file-archive", "arc"), "text-x-nfo": ("file-text", "text"), "text-rtf": ("file-text", "doc"), "text-x-changelog": ("file-log", "text"),
     "text-x-copying": ("file-text", "text"), "text-x-authors": ("file-text", "text"), "text-x-install": ("file-text", "text"), "text-x-po": ("file-text", "text"), "text-x-bibtex": ("file-text", "text"),
     "text-x-hex": ("file-code", "code"), "application-x-core": ("file-unknown", "text"), "application-x-partial-download": ("download", "net"), "text-x-diff": ("file-source", "code"),
-    "application-x-m4": ("file-script", "code"), "text-x-meson": ("file-script", "code"), "application-x-awk": ("file-script", "code"), "application-x-fictionbook+xml": ("file-ebook", "pdf"),
+    "application-x-m4": ("file-script", "code"), "text-x-meson": ("file-script", "code"), "application-x-awk": ("file-script", "code"), "application-x-fictionbook+xml": ("file-ebook", "book"),
     "text-x-opml+xml": ("file-code", "code"), "application-rss+xml": ("file-code", "code"), "application-atom+xml": ("file-code", "code"), "text-xsl": ("file-code", "code"),
     "application-xslt+xml": ("file-code", "code"), "text-x-scss": ("file-code", "code"), "text-x-sass": ("file-code", "code"), "text-x-less": ("file-code", "code"), "text-vtt": ("file-sub", "vid"),
     "application-x-tgif": ("file-vector", "img"), "application-x-theme": ("file-config", "text"), "text-x-credits": ("file-text", "text"), "application-vnd.efi.iso": ("file-disk-image", "disk"),

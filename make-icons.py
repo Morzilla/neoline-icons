@@ -388,12 +388,109 @@ HEAD = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="
 STYLE_MONO = ('<defs><style type="text/css" id="current-color-scheme">.ColorScheme-Text { color:#dfdfdf; }</style></defs>')
 
 
+def soften(d, radius=1.5):
+    """Rounds the corners of the straight-edged parts of a path, for the soft look of the theme.
+
+    Only sub-paths made of straight segments (M L H V Z, either case) are touched; one with a curve or an arc in
+    it is returned as it is. Every corner between two segments long enough gets a small quadratic curve."""
+    import math
+    import re
+    out = []
+    curved = False
+    for sub in re.findall(r"[Mm][^Mm]*", d):
+        if curved and sub[0] == "m":
+            return d  # a relative move after a curve: its start depends on where the curve ends, leave the path alone
+        curved = curved or bool(re.search(r"[AaCcSsQqTt]", sub))
+    for sub in re.findall(r"[Mm][^Mm]*", d):
+        tokens = re.findall(r"[A-Za-z]|-?\d*\.?\d+(?:e-?\d+)?", sub)
+        if any(t.isalpha() and t not in "MmLlHhVvZz" for t in tokens):
+            out.append((sub, None))
+            continue
+        out.append((sub, tokens))
+    result, cur = [], (0.0, 0.0)
+    for sub, tokens in out:
+        if tokens is None:
+            # keep the current point right for a relative "m" that follows: re-read only the start of this sub-path
+            nums = re.findall(r"-?\d*\.?\d+", sub)
+            start = (float(nums[0]), float(nums[1])) if sub[0] == "M" else (cur[0] + float(nums[0]), cur[1] + float(nums[1]))
+            result.append(("M%g %g" % start) + sub[re.match(r"[Mm]\s*-?\d*\.?\d+[\s,]*-?\d*\.?\d+", sub).end():] if sub[0] == "m" else sub)
+            cur = start  # an approximation: good enough, such sub-paths are closed shapes or come last
+            continue
+        pts, closed, cmd, i = [], False, None, 0
+        while i < len(tokens):
+            t = tokens[i]
+            if t.isalpha():
+                cmd = t
+                i += 1
+                if cmd in "Zz":
+                    closed = True
+                continue
+            if cmd in "Mm":
+                x, y = float(tokens[i]), float(tokens[i + 1])
+                i += 2
+                cur = (x, y) if cmd == "M" else (cur[0] + x, cur[1] + y)
+                cmd = "L" if cmd == "M" else "l"
+            elif cmd in "Ll":
+                x, y = float(tokens[i]), float(tokens[i + 1])
+                i += 2
+                cur = (x, y) if cmd == "L" else (cur[0] + x, cur[1] + y)
+            elif cmd in "Hh":
+                x = float(tokens[i])
+                i += 1
+                cur = (x, cur[1]) if cmd == "H" else (cur[0] + x, cur[1])
+            elif cmd in "Vv":
+                y = float(tokens[i])
+                i += 1
+                cur = (cur[0], y) if cmd == "V" else (cur[0], cur[1] + y)
+            else:
+                i += 1
+                continue
+            pts.append(cur)
+        if closed and len(pts) > 1 and math.dist(pts[0], pts[-1]) < 1e-6:
+            pts.pop()
+        if closed:
+            cur = pts[0]
+        n = len(pts)
+        if n < 3:
+            result.append("M" + "L".join("%g %g" % p for p in pts) + ("z" if closed else ""))
+            continue
+
+        def corner(a, b, c):
+            la, lc = math.dist(a, b), math.dist(b, c)
+            r = min(radius, la / 2.2, lc / 2.2)
+            cross = (b[0] - a[0]) * (c[1] - b[1]) - (b[1] - a[1]) * (c[0] - b[0])
+            if r < 0.35 or abs(cross) < 1e-6 * la * lc + 1e-9:
+                return None
+            p = (b[0] + (a[0] - b[0]) * r / la, b[1] + (a[1] - b[1]) * r / la)
+            q = (b[0] + (c[0] - b[0]) * r / lc, b[1] + (c[1] - b[1]) * r / lc)
+            return p, q
+
+        parts = []
+        if closed:
+            first = ((pts[0][0] + pts[1][0]) / 2, (pts[0][1] + pts[1][1]) / 2)
+            parts.append("M%g %g" % first)
+            order = [(pts[(k) % n], pts[(k + 1) % n], pts[(k + 2) % n]) for k in range(n)]
+            for a, b, c in order:
+                rounded = corner(a, b, c)
+                parts.append("L%g %g" % b if rounded is None else "L%g %gQ%g %g %g %g" % (*rounded[0], *b, *rounded[1]))
+            parts.append("z")
+        else:
+            parts.append("M%g %g" % pts[0])
+            for k in range(1, n - 1):
+                rounded = corner(pts[k - 1], pts[k], pts[k + 1])
+                parts.append("L%g %g" % pts[k] if rounded is None else "L%g %gQ%g %g %g %g" % (*rounded[0], *pts[k], *rounded[1]))
+            parts.append("L%g %g" % pts[-1])
+        result.append("".join(parts))
+    return "".join(result)
+
+
 def svg(paths, colour=None):
     """A stroke drawing; colour None = monochrome, follows the colour scheme."""
     stroke = "currentColor" if colour is None else colour
     cls = ' class="ColorScheme-Text"' if colour is None else ""
     fill = "none" if colour is None else colour
     fill_opacity = "" if colour is None else ' fill-opacity="0.16"'
+    paths = [soften(d) for d in paths]
     body = "".join(f'<path d="{d}" fill="{fill}"{fill_opacity} stroke="{stroke}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"{cls}/>' for d in paths)
     # small circles written as "h.01" need a visible dot: the round cap does it
     return HEAD + (STYLE_MONO if colour is None else "") + body + "</svg>\n"

@@ -9,6 +9,9 @@ places and file types come in three variants:
 - **NeoLine White** – places and devices in white, file types in colour
 - **NeoLine Yellow** – places and devices in yellow, file types in colour
 
+It also draws the best-known applications (browsers, terminal, editors, chat, media players, office, virtual
+machines…) as one plain glyph each, in a colour that recalls the program; they keep that colour in every variant.
+
 Everything it does not draw is inherited from Breeze Dark.
 
 ```

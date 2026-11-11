@@ -260,6 +260,101 @@ MIMES.update({
     "application-xslt+xml": ("file-code", "code"), "text-x-scss": ("file-code", "code"), "text-x-sass": ("file-code", "code"), "text-x-less": ("file-code", "code"), "text-vtt": ("file-sub", "vid"),
     "application-x-tgif": ("file-vector", "img"), "application-x-theme": ("file-config", "text"), "text-x-credits": ("file-text", "text"), "application-vnd.efi.iso": ("file-disk-image", "disk"),
 })
+# ---- applications: one plain glyph each, in a colour that recalls the program
+APP_P = {
+    "firefox": ["M12 3.5a8.5 8.5 0 1 0 0 17a8.5 8.5 0 1 0 0-17", "M7.2 8.4c2-2.6 5.8-3.1 8.3-1.1 2.500 2 2.6 5.8.2 7.900-2.1 1.8-5.3 1.700-7.2-.3"],
+    "brave": ["M12 3.5 7.5 4.5 5 8l.8 6.500C6.5 17.5 9 19.5 12 21c3-1.5 5.500-3.5 6.200-6.500L19 8l-2.500-3.500z", "m8.5 9.5 3.5 1.5 3.500-1.500M12 11v3.500M9.5 15.5 12 17l2.500-1.5"],
+    "chrome": ["M12 3.5a8.5 8.5 0 1 0 0 17a8.5 8.5 0 1 0 0-17", "M12 8.500a3.5 3.5 0 1 0 0 7a3.5 3.5 0 1 0 0-7", "M12 8.500h7.700M9 13.8 5 7.300M15 13.800l-3.8 6.6"],
+    "files": ["M3 6.500A1.5 1.5 0 0 1 4.5 5h4l2 2h9A1.5 1.5 0 0 1 21 8.500v9a1.5 1.5 0 0 1-1.5 1.500h-15A1.5 1.5 0 0 1 3 17.500z", "M7 13.500c1.700-2 3.300-2 5 0s3.3 2 5 0"],
+    "terminal": ["M4.5 5h15A1.5 1.5 0 0 1 21 6.500v11a1.5 1.5 0 0 1-1.5 1.500h-15A1.5 1.5 0 0 1 3 17.500v-11A1.5 1.5 0 0 1 4.5 5z", "m7 9.5 3 2.500-3 2.5", "M12.5 15h4"],
+    "editor": ["M4.5 5.500h11M4.5 10h8M4.5 14.500h5", "m12.5 19.500.900-3.4 5.300-5.3 2.5 2.500-5.3 5.300z"],
+    "vscode": ["M16.5 3.5 8 11.5 4.5 9 3 10l3.5 2L3 14l1.5 1L8 12.500l8.5 8 4-2v-13z", "M16.5 8.500v7L11.5 12z"],
+    "telegram": ["M21 4.5 3 11.500l5.5 2L10 19.500l3-3.5 4.5 3.500z", "M8.5 13.5 17 8l-7 7.5"],
+    "slack": ["M9.5 4.500v15M14.5 4.500v15M4.5 9.500h15M4.5 14.500h15"],
+    "teams": ["M3.5 7.500h10v10h-10z", "M6 10.500h5M8.5 10.500v5", "M17.5 8.500m-2 0a2 2 0 1 0 4 0a2 2 0 1 0-4 0", "M15.5 12.500h5v3.500a2.5 2.5 0 0 1-5 0"],
+    "discord": ["M7 6.500c3.300-1 6.700-1 10 0l2.5 9.500c-1.5 1.200-3 1.900-4.5 2.200l-1-1.800h-4l-1 1.800c-1.500-.300-3-1-4.500-2.200z", "M9.5 12.500h.010M14.5 12.500h.010"],
+    "mail": ["M3.5 6h17v12h-17z", "m4 7 8 6 8-6"],
+    "settings": ["M4 7h8M18 7h2M4 12h2M12 12h8M4 17h10M20 17h0", "M15 7m-2.2 0a2.2 2.2 0 1 0 4.4 0a2.2 2.2 0 1 0-4.4 0", "M9 12m-2.2 0a2.2 2.2 0 1 0 4.4 0a2.2 2.2 0 1 0-4.4 0", "M17 17m-2.2 0a2.2 2.2 0 1 0 4.4 0a2.2 2.2 0 1 0-4.4 0"],
+    "store": ["M5 8.500h14l-1 11.500H6z", "M9 8.500V7a3 3 0 0 1 6 0v1.5"],
+    "calculator": ["M6 3.500h12v17H6z", "M8.5 6.500h7v3h-7z", "M9 13.500h.010M12 13.500h.010M15 13.500h.010M9 17h.010M12 17h.010M15 17h.010"],
+    "screenshot": ["M4 8.500V5h3.500M16.5 5H20v3.500M20 15.500V19h-3.500M7.5 19H4v-3.5", "M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0-6 0"],
+    "viewer": ["M6 3.500h8l4 4v13H6z", "M11.5 12.500m-2.5 0a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0-5 0", "m13.4 14.4 2.1 2.1"],
+    "images": ["M3.5 4.500h17v15h-17z", "M9 9.500m-1.6 0a1.6 1.6 0 1 0 3.2 0a1.6 1.6 0 1 0-3.2 0", "m4 17 5-5 4 4 3-3 4 4"],
+    "vlc": ["M10.5 4h3l3.5 11.500h-10z", "M9.3 8.500h5.400M8.2 12h7.6", "M5 19.500h14l-1.200-4H6.200z"],
+    "music": ["M12 3.5a8.5 8.5 0 1 0 0 17a8.5 8.5 0 1 0 0-17", "M10.3 15.300V8.800l4.700-1v6.2", "M8.8 15.300m-1.5 0a1.5 1.5 0 1 0 3 0a1.5 1.5 0 1 0-3 0", "M13.5 14m-1.5 0a1.5 1.5 0 1 0 3 0a1.5 1.5 0 1 0-3 0"],
+    "video": ["M4.5 5h15A1.5 1.5 0 0 1 21 6.500v11a1.5 1.5 0 0 1-1.5 1.500h-15A1.5 1.5 0 0 1 3 17.500v-11A1.5 1.5 0 0 1 4.5 5z", "M10 8.800v6.400l5.500-3.200z"],
+    "spotify": ["M12 3.5a8.5 8.5 0 1 0 0 17a8.5 8.5 0 1 0 0-17", "M7.5 9.800c3-1 6.500-.7 9 .8", "M8 12.700c2.500-.8 5.300-.5 7.500.7", "M8.7 15.400c2-.6 4-.4 5.600.5"],
+    "steam": ["M12 3.5a8.5 8.5 0 1 0 0 17a8.5 8.5 0 1 0 0-17", "M3.8 13.3 8.3 15", "M15 9.500m-2.5 0a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0-5 0", "M9.8 16m-1.8 0a1.8 1.8 0 1 0 3.6 0a1.8 1.8 0 1 0-3.6 0", "m11.2 14.8 2-3.3"],
+    "palette": ["M12 4a8 8 0 1 0 0 16c1.5 0 2-1 1.500-2.200s0-2.3 1.500-2.300H18a3 3 0 0 0 3-3C21 7.5 17 4 12 4z", "M8 11h.010M10.5 7.800h.010M14.5 7.800h.010"],
+    "nib": ["M12 3.5 7 13l5 7.5 5-7.500z", "M12 3.500V12", "M12 13.200m-1.2 0a1.2 1.2 0 1 0 2.4 0a1.2 1.2 0 1 0-2.4 0"],
+    "brush": ["M19.5 4.5 10.5 13.5", "M10.5 13.500c-2 0-3.7 1.600-3.7 3.6 0 1-1 1.700-2.3 1.7 3.2 1.7 8 .5 8-3.300z"],
+    "record": ["M12 3.5a8.5 8.5 0 1 0 0 17a8.5 8.5 0 1 0 0-17", "M12 12m-3.2 0a3.2 3.2 0 1 0 6.4 0a3.2 3.2 0 1 0-6.4 0"],
+    "vm": ["M3.5 5h17v11h-17z", "M9 20h6M12 16v4", "M8 8h8v5H8z"],
+    "vmware": ["M4 9.500h9v9H4z", "M11 5.500h9v9h-9z"],
+    "mirror": ["M3.5 5h17v11h-17z", "M9 20h6M12 16v4", "M11.3 10m-2.3 0a2.3 2.3 0 1 0 4.6 0a2.3 2.3 0 1 0-4.6 0", "m13 11.7 1.9 1.9"],
+    "monitor": ["M3.5 5h17v14h-17z", "M5.5 12h3l1.500-3.5 3 7 1.500-3.500h4"],
+    "bubble": ["M12 4a8 8 0 0 0-6.9 12L4 20l4.2-1A8 8 0 1 0 12 4z"],
+    "bubble-phone": ["M12 4a8 8 0 0 0-6.9 12L4 20l4.2-1A8 8 0 1 0 12 4z", "M9.3 9.500c0 3 2.2 5.2 5.2 5.2"],
+    "bubble-lines": ["M12 4a8 8 0 0 0-6.9 12L4 20l4.2-1A8 8 0 1 0 12 4z", "M8.5 10.500h7M8.5 13.500h4.5"],
+    "download": ["M12 3.5a8.5 8.5 0 1 0 0 17a8.5 8.5 0 1 0 0-17", "M12 7.500v8M8.5 12.5 12 16l3.500-3.5"],
+    "key": ["M8.5 12m-3.5 0a3.5 3.5 0 1 0 7 0a3.5 3.5 0 1 0-7 0", "M12 12h8.500M17.5 12v3M20.5 12v2"],
+    "office": ["M6 3.500h8l4 4v13H6z", "M14 3.500v4h4"],
+    "draw": ["M4.5 4.500h9v9h-9z", "M15.5 15.500m-4.5 0a4.5 4.5 0 1 0 9 0a4.5 4.5 0 1 0-9 0"],
+    "database": ["M5 6.500c0-1.7 3.100-3 7-3s7 1.3 7 3-3.1 3-7 3-7-1.300-7-3z", "M5 6.500v11c0 1.7 3.1 3 7 3s7-1.3 7-3v-11", "M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3"],
+    "launcher": ["M4.5 4.500h6v6h-6zM13.5 4.500h6v6h-6zM4.5 13.500h6v6h-6zM13.5 13.500h6v6h-6z"],
+    "claude": ["M12 3.500v17M3.5 12h17M6 6l12 12M18 6 6 18"],
+}
+P.update({"app-" + k: v for k, v in APP_P.items()})
+APPS = {
+    "firefox": ("firefox", "#f0803a"), "org.mozilla.firefox": ("firefox", "#f0803a"), "firefox-esr": ("firefox", "#f0803a"), "librewolf": ("firefox", "#4aa3e0"),
+    "brave-browser": ("brave", "#f0623a"), "brave": ("brave", "#f0623a"), "brave-desktop": ("brave", "#f0623a"), "com.brave.Browser": ("brave", "#f0623a"),
+    "google-chrome": ("chrome", "#e8b53a"), "com.google.Chrome": ("chrome", "#e8b53a"), "chromium": ("chrome", "#4a8fe0"), "chromium-browser": ("chrome", "#4a8fe0"),
+    "org.chromium.Chromium": ("chrome", "#4a8fe0"), "vivaldi": ("chrome", "#e0524a"), "microsoft-edge": ("chrome", "#3fb0c9"), "internet-web-browser": ("chrome", "#4a8fe0"),
+    "system-file-manager": ("files", "#4f93d9"), "org.kde.dolphin": ("files", "#4f93d9"), "dolphin": ("files", "#4f93d9"), "org.gnome.Nautilus": ("files", "#4f93d9"),
+    "utilities-terminal": ("terminal", "#9aa3ad"), "org.kde.konsole": ("terminal", "#9aa3ad"), "konsole": ("terminal", "#9aa3ad"), "org.kde.yakuake": ("terminal", "#9aa3ad"),
+    "yakuake": ("terminal", "#9aa3ad"), "Alacritty": ("terminal", "#e0803a"), "kitty": ("terminal", "#b08a5a"),
+    "kate": ("editor", "#4a8fe0"), "org.kde.kate": ("editor", "#4a8fe0"), "kwrite": ("editor", "#5aa8d9"), "org.kde.kwrite": ("editor", "#5aa8d9"),
+    "accessories-text-editor": ("editor", "#5aa8d9"), "org.gnome.TextEditor": ("editor", "#5aa8d9"),
+    "vscode": ("vscode", "#3a9be8"), "code": ("vscode", "#3a9be8"), "visual-studio-code": ("vscode", "#3a9be8"), "com.visualstudio.code": ("vscode", "#3a9be8"),
+    "com.microsoft.VSCode": ("vscode", "#3a9be8"), "vscodium": ("vscode", "#4ab3c9"), "com.vscodium.codium": ("vscode", "#4ab3c9"), "code-oss": ("vscode", "#3a9be8"),
+    "org.telegram.desktop": ("telegram", "#3aa8e8"), "telegram": ("telegram", "#3aa8e8"), "telegram-desktop": ("telegram", "#3aa8e8"),
+    "slack": ("slack", "#b673c9"), "com.slack.Slack": ("slack", "#b673c9"),
+    "com.github.IsmaelMartinez.teams_for_linux": ("teams", "#7b83eb"), "teams-for-linux": ("teams", "#7b83eb"), "teams": ("teams", "#7b83eb"),
+    "discord": ("discord", "#7289da"), "com.discordapp.Discord": ("discord", "#7289da"),
+    "thunderbird": ("mail", "#3a8fd6"), "org.mozilla.Thunderbird": ("mail", "#3a8fd6"), "kmail": ("mail", "#4a8fe0"), "org.kde.kmail2": ("mail", "#4a8fe0"),
+    "internet-mail": ("mail", "#4a8fe0"), "evolution": ("mail", "#4a8fe0"),
+    "preferences-system": ("settings", "#8fa0b3"), "systemsettings": ("settings", "#8fa0b3"), "org.kde.systemsettings": ("settings", "#8fa0b3"),
+    "plasmadiscover": ("store", "#3fa6d9"), "org.kde.discover": ("store", "#3fa6d9"), "system-software-install": ("store", "#3fa6d9"), "org.gnome.Software": ("store", "#3fa6d9"),
+    "accessories-calculator": ("calculator", "#c9a24d"), "kcalc": ("calculator", "#c9a24d"), "org.kde.kcalc": ("calculator", "#c9a24d"),
+    "spectacle": ("screenshot", "#a66b9c"), "org.kde.spectacle": ("screenshot", "#a66b9c"), "applets-screenshooter": ("screenshot", "#a66b9c"),
+    "okular": ("viewer", "#e0524a"), "org.kde.okular": ("viewer", "#e0524a"), "graphics-viewer-document": ("viewer", "#e0524a"), "org.gnome.Evince": ("viewer", "#e0524a"),
+    "gwenview": ("images", "#5b7bb0"), "org.kde.gwenview": ("images", "#5b7bb0"), "org.gnome.eog": ("images", "#5b7bb0"),
+    "vlc": ("vlc", "#f08a2a"), "org.videolan.VLC": ("vlc", "#f08a2a"),
+    "elisa": ("music", "#c98a4b"), "org.kde.elisa": ("music", "#c98a4b"), "audacious": ("music", "#c98a4b"), "rhythmbox": ("music", "#c98a4b"), "strawberry": ("music", "#d06060"),
+    "mpv": ("video", "#a66b9c"), "io.mpv.Mpv": ("video", "#a66b9c"), "haruna": ("video", "#a66b9c"), "org.kde.haruna": ("video", "#a66b9c"),
+    "celluloid": ("video", "#a66b9c"), "org.kde.dragonplayer": ("video", "#a66b9c"), "kdenlive": ("video", "#5a8fd0"), "org.kde.kdenlive": ("video", "#5a8fd0"),
+    "spotify": ("spotify", "#3fbf6a"), "spotify-client": ("spotify", "#3fbf6a"), "com.spotify.Client": ("spotify", "#3fbf6a"),
+    "steam": ("steam", "#6a8fb8"), "com.valvesoftware.Steam": ("steam", "#6a8fb8"),
+    "gimp": ("palette", "#b08a5a"), "org.gimp.GIMP": ("palette", "#b08a5a"),
+    "inkscape": ("nib", "#8fa0b3"), "org.inkscape.Inkscape": ("nib", "#8fa0b3"),
+    "krita": ("brush", "#e06aa0"), "org.kde.krita": ("brush", "#e06aa0"),
+    "com.obsproject.Studio": ("record", "#8f99a6"), "obs": ("record", "#8f99a6"),
+    "virt-manager": ("vm", "#4f93d9"), "virtualbox": ("vm", "#4a7fd0"), "org.gnome.Boxes": ("vm", "#4f93d9"),
+    "vmware-workstation": ("vmware", "#e09a3a"), "vmware-player": ("vmware", "#e09a3a"),
+    "looking-glass": ("mirror", "#8fd0c0"), "looking-glass-client": ("mirror", "#8fd0c0"),
+    "utilities-system-monitor": ("monitor", "#4caf6a"), "org.kde.plasma-systemmonitor": ("monitor", "#4caf6a"), "ksysguard": ("monitor", "#4caf6a"), "htop": ("monitor", "#4caf6a"),
+    "whatsapp": ("bubble-phone", "#3fbf6a"), "com.whatsapp.WhatsApp": ("bubble-phone", "#3fbf6a"), "signal-desktop": ("bubble", "#4a7fe0"), "org.signal.Signal": ("bubble", "#4a7fe0"),
+    "element": ("bubble-lines", "#3fb89a"), "im.riot.Riot": ("bubble-lines", "#3fb89a"), "neochat": ("bubble-lines", "#4a8fe0"), "org.kde.neochat": ("bubble-lines", "#4a8fe0"),
+    "qbittorrent": ("download", "#4a8fe0"), "org.qbittorrent.qBittorrent": ("download", "#4a8fe0"), "ktorrent": ("download", "#4a8fe0"), "transmission": ("download", "#d06060"),
+    "keepassxc": ("key", "#5aa860"), "org.keepassxc.KeePassXC": ("key", "#5aa860"), "kwalletmanager": ("key", "#d9b44a"), "bitwarden": ("key", "#4a7fe0"),
+    "libreoffice-startcenter": ("office", "#8f99a6"), "libreoffice-main": ("office", "#8f99a6"),
+    "libreoffice-writer": ("file-text", "#4a8fe0"), "libreoffice-calc": ("file-sheet", "#4caf6a"), "libreoffice-impress": ("file-pres", "#e07a45"),
+    "libreoffice-draw": ("draw", "#d9b44a"), "libreoffice-base": ("database", "#a66b9c"), "libreoffice-math": ("calculator", "#8f99a6"),
+    "ark": ("file-archive", "#c0894b"), "org.kde.ark": ("file-archive", "#c0894b"), "file-roller": ("file-archive", "#c0894b"),
+    "start-here-kde": ("launcher", "#4f93d9"), "start-here-kde-plasma": ("launcher", "#4f93d9"), "start-here": ("launcher", "#4f93d9"),
+    "claude": ("claude", "#d97757"), "claude-desktop": ("claude", "#d97757"),
+}
+
 ACTIONS = [k for k in P if k.startswith(("view-", "go-", "edit-", "folder-new", "document-", "list-", "dialog-", "window-", "tab-", "application-menu",
                                           "configure", "zoom-", "bookmarks", "help-", "media-", "audio-", "mail-", "link", "emblem-", "show-menu", "overflow-menu",
                                           "process-stop", "kt-", "system-run", "preferences-", "tag", "flag", "rating", "image-x-generic-symbolic"))]
@@ -325,15 +420,20 @@ def build(theme):
         # file types keep the colour of their kind in every variant: only places and devices change
         write(os.path.join(OUT, "scalable", "mimetypes", name + ".svg"), svg(P[drawing], KINDS[kind]))
         sheet.append(("mimetypes", name, svg(P[drawing], KINDS[kind])))
+    for name, (drawing, colour) in APPS.items():
+        # applications keep their own colour in every variant, like file types
+        glyph = P.get("app-" + drawing) or P[drawing]
+        write(os.path.join(OUT, "scalable", "apps", name + ".svg"), svg(glyph, colour))
+        sheet.append(("apps", name, svg(glyph, colour)))
     for name in ("drive-harddisk", "drive-removable-media", "media-optical", "smartphone", "computer", "network-server"):
         drawing, kind = PLACES[name]
         write(os.path.join(OUT, "scalable", "devices", name + ".svg"), svg(P[drawing], C[kind]))
-    dirs = ["scalable/actions", "scalable/places", "scalable/mimetypes", "scalable/devices"]
+    dirs = ["scalable/actions", "scalable/places", "scalable/mimetypes", "scalable/devices", "scalable/apps"]
     index = ["[Icon Theme]", "Name=" + theme.replace("-", " "), "Comment=Outline icons in the style of the Dolphin NG cards",
              "Inherits=" + ",".join(inherits()), "Example=folder", "FollowsColorScheme=true",
              "Directories=" + ",".join(dirs), ""]
     for d in dirs:
-        index += [f"[{d}]", "Size=24", "Type=Scalable", "MinSize=8", "MaxSize=512", "Context=" + {"mimetypes": "MimeTypes"}.get(d.split("/")[1], d.split("/")[1].capitalize()), ""]
+        index += [f"[{d}]", "Size=24", "Type=Scalable", "MinSize=8", "MaxSize=512", "Context=" + {"mimetypes": "MimeTypes", "apps": "Applications"}.get(d.split("/")[1], d.split("/")[1].capitalize()), ""]
     write(os.path.join(OUT, "index.theme"), "\n".join(index))
 
     if os.path.islink(INSTALL) or os.path.isdir(INSTALL):

@@ -16,6 +16,15 @@ Everything it does not draw is inherited from Breeze Dark.
 ./make-icons.py --sheet    # also writes preview.html with every icon
 ```
 
+The installer of the NG desktop also sets the theme up, next to [Breeze NG](https://github.com/Morzilla/breeze-ng)
+and [Dolphin NG](https://github.com/Morzilla/dolphin-ng), and lets you choose the variant:
+
+```sh
+bash <(curl -fsSL https://raw.githubusercontent.com/Morzilla/breeze-ng/ng/ng/install-gui.sh)
+```
+
+![The graphical installer: choosing the look and the icons](https://raw.githubusercontent.com/Morzilla/breeze-ng/ng/ng/screenshots/06-installer.png)
+
 Then pick one in System Settings › Colours & Themes › Icons, or `/usr/libexec/plasma-changeicons NeoLine-White`.
 To add an icon, put its path data in the `P` dictionary of the script and its name in `PLACES`, `MIMES` or
 the actions list, and run the script again. Licence: MIT (see LICENSE). Drawn with Claude (Anthropic).

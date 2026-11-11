@@ -373,8 +373,8 @@ def status_svg(paths, extra):
     body = svg(paths)
     more = ""
     if extra == "dot":
-        more = '<circle cx="19" cy="6" r="3.6" fill="currentColor" class="ColorScheme-Accent"/>'
-        body = body.replace("</style>", " .ColorScheme-Accent { color:#3daee9; }</style>")
+        # the unread mark: a red dot at the bottom right, with a dark ring so that it stands out on the plane
+        more = '<circle cx="18.5" cy="18" r="4.6" fill="#1b1d20" fill-opacity="0.85"/><circle cx="18.5" cy="18" r="3.7" fill="#e5484d"/>'
     elif extra == "slash":
         more = '<path d="M4 4l16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" class="ColorScheme-Text"/>'
     return body.replace("</svg>", more + "</svg>")

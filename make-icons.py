@@ -13,6 +13,8 @@ import os
 import shutil
 import sys
 
+import symbolic
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "NeoLine")
 INSTALL = os.path.expanduser("~/.local/share/icons/NeoLine")
@@ -514,8 +516,13 @@ VARIANTS = {"NeoLine": None, "NeoLine-White": "#e8e8e8", "NeoLine-Yellow": "#e8c
 KINDS = dict(C)
 
 
+SYMBOLIC = symbolic.build_set(P, ACTIONS, PLACES)
+
+
 def main():
     global OUT, INSTALL, C
+    if "--symbolic" in sys.argv:
+        print(symbolic.convert(SYMBOLIC, soften), "symbolic drawings converted with inkscape")
     kinds = dict(C)
     for theme, single in VARIANTS.items():
         OUT = os.path.join(HERE, theme)
@@ -563,12 +570,25 @@ def build(theme):
     for name in ("drive-harddisk", "drive-removable-media", "media-optical", "smartphone", "computer", "network-server"):
         drawing, kind = PLACES[name]
         write(os.path.join(OUT, "scalable", "devices", name + ".svg"), svg(P[drawing], C[kind]))
-    dirs = ["scalable/actions", "scalable/places", "scalable/mimetypes", "scalable/devices", "scalable/apps", "scalable/status"]
+    # the symbolic twins: filled outlines of the same drawings (see symbolic.py), the same in every variant
+    cache = symbolic.load_cache()
+    missing = 0
+    for name, (context, layers) in SYMBOLIC.items():
+        text = symbolic.svg(layers, soften, cache, STYLE_MONO)
+        if text is None:
+            missing += 1
+            continue
+        write(os.path.join(OUT, "symbolic", context, name + "-symbolic.svg"), text)
+        sheet.append(("symbolic", name + "-symbolic", text.replace("currentColor", "#dfdfdf")))
+    if missing:
+        print(f"{missing} symbolic icons not written: run ./make-icons.py --symbolic (needs inkscape)")
+    dirs = ["scalable/actions", "scalable/places", "scalable/mimetypes", "scalable/devices", "scalable/apps", "scalable/status",
+            "symbolic/actions", "symbolic/places", "symbolic/devices", "symbolic/status"]
     index = ["[Icon Theme]", "Name=" + theme.replace("-", " "), "Comment=Outline icons in the style of the Dolphin NG cards",
              "Inherits=" + ",".join(PORTABLE_INHERITS), "Example=folder", "FollowsColorScheme=true",
              "Directories=" + ",".join(dirs), ""]
     for d in dirs:
-        index += [f"[{d}]", "Size=24", "Type=Scalable", "MinSize=8", "MaxSize=512", "Context=" + {"mimetypes": "MimeTypes", "apps": "Applications"}.get(d.split("/")[1], d.split("/")[1].capitalize()), ""]
+        index += [f"[{d}]", "Size=16" if d.startswith("symbolic/") else "Size=24", "Type=Scalable", "MinSize=8", "MaxSize=512", "Context=" + {"mimetypes": "MimeTypes", "apps": "Applications"}.get(d.split("/")[1], d.split("/")[1].capitalize()), ""]
     write(os.path.join(OUT, "index.theme"), "\n".join(index))
 
     if os.path.islink(INSTALL) or os.path.isdir(INSTALL):

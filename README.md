@@ -12,11 +12,17 @@ places and file types come in three variants:
 It also draws the best-known applications (browsers, terminal, editors, chat, media players, office, virtual
 machines…) as one plain glyph each, in a colour that recalls the program; they keep that colour in every variant.
 
-Everything it does not draw is inherited from Breeze Dark.
+It has the **symbolic** icons too, the small monochrome ones that panels, bars and GTK applications ask for
+(network and Wi-Fi with their signal levels, Bluetooth, volume, microphone, battery levels and charging,
+brightness, notifications, window buttons, and a symbolic twin of every action and place): 336 of them, so the
+theme also works outside Plasma, on niri, Sway, GNOME and the like.
+
+Everything it does not draw is inherited from Breeze Dark, or from Adwaita where Breeze is not installed.
 
 ```
 ./make-icons.py            # writes the three themes here and installs them in ~/.local/share/icons
 ./make-icons.py --sheet    # also writes preview.html with every icon
+./make-icons.py --symbolic # after changing a symbolic drawing in symbolic.py: turns the strokes into filled shapes (needs inkscape)
 ```
 
 The installer of the NG desktop also sets the theme up, next to [Breeze NG](https://github.com/Morzilla/breeze-ng)

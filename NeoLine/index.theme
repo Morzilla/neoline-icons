@@ -4,7 +4,7 @@ Comment=Outline icons in the style of the Dolphin NG cards
 Inherits=breeze-dark,breeze,Adwaita,hicolor
 Example=folder
 FollowsColorScheme=true
-Directories=scalable/actions,scalable/places,scalable/mimetypes,scalable/devices,scalable/apps,scalable/status
+Directories=scalable/actions,scalable/places,scalable/mimetypes,scalable/devices,scalable/apps,scalable/status,symbolic/actions,symbolic/places,symbolic/devices,symbolic/status
 
 [scalable/actions]
 Size=24
@@ -43,6 +43,34 @@ Context=Applications
 
 [scalable/status]
 Size=24
+Type=Scalable
+MinSize=8
+MaxSize=512
+Context=Status
+
+[symbolic/actions]
+Size=16
+Type=Scalable
+MinSize=8
+MaxSize=512
+Context=Actions
+
+[symbolic/places]
+Size=16
+Type=Scalable
+MinSize=8
+MaxSize=512
+Context=Places
+
+[symbolic/devices]
+Size=16
+Type=Scalable
+MinSize=8
+MaxSize=512
+Context=Devices
+
+[symbolic/status]
+Size=16
 Type=Scalable
 MinSize=8
 MaxSize=512

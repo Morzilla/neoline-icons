@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: MIT
-%global commit      e8beedf1119bb54ebadba66353473eb9db46a518
+%global commit      99b35d5d9da2d53255ce806ed10729565a884ad4
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global snapdate    202611141208
+%global snapdate    202611141222
 
 Name:           neoline-icons
 Version:        1.0^%{snapdate}git%{shortcommit}
@@ -41,6 +41,9 @@ done
 %{_datadir}/icons/NeoLine-Yellow
 
 %changelog
+* Sat Nov 14 2026 Morzilla <3956663+Morzilla@users.noreply.github.com> - 1.0^202611141222git99b35d5-1
+- Symbolic icons (336): network, battery, volume, brightness, window buttons and more
+
 * Sat Nov 14 2026 Morzilla <3956663+Morzilla@users.noreply.github.com> - 1.0^202611141208gite8beedf-1
 - Archive and mail emblem icons; Adwaita in the fallback list for desktops without Breeze
 

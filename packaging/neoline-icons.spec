@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: MIT
-%global commit      3a08f56c7b9305e24367f84589142eadf149d70b
+%global commit      e8beedf1119bb54ebadba66353473eb9db46a518
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global snapdate    20261113
+%global snapdate    202611141208
 
 Name:           neoline-icons
 Version:        1.0^%{snapdate}git%{shortcommit}
@@ -30,7 +30,7 @@ mkdir -p %{buildroot}%{_datadir}/icons
 for theme in NeoLine NeoLine-White NeoLine-Yellow; do
     cp -a $theme %{buildroot}%{_datadir}/icons/
     # fall back on the Breeze themes every system has
-    sed -i 's/^Inherits=.*/Inherits=breeze-dark,breeze,hicolor/' %{buildroot}%{_datadir}/icons/$theme/index.theme
+    sed -i 's/^Inherits=.*/Inherits=breeze-dark,breeze,Adwaita,hicolor/' %{buildroot}%{_datadir}/icons/$theme/index.theme
 done
 
 %files
@@ -41,5 +41,8 @@ done
 %{_datadir}/icons/NeoLine-Yellow
 
 %changelog
+* Sat Nov 14 2026 Morzilla <3956663+Morzilla@users.noreply.github.com> - 1.0^202611141208gite8beedf-1
+- Archive and mail emblem icons; Adwaita in the fallback list for desktops without Breeze
+
 * Fri Nov 13 2026 Morzilla <3956663+Morzilla@users.noreply.github.com> - 1.0^20261113git3a08f56-1
 - First package

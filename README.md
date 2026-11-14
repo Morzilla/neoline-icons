@@ -1,5 +1,14 @@
 # NeoLine
 
+**Fedora 44 and 45: there are ready-made packages on COPR**, no building needed:
+
+```
+sudo dnf copr enable morzilla/desktop-ng
+sudo dnf install neoline-icons
+```
+
+Then pick NeoLine in System Settings > Icons. The same repository has the rest of the NG desktop: `breeze-ng`, `dolphin-ng`, `dialog-ng`, `neoline-icons` ([project page](https://copr.fedorainfracloud.org/coprs/morzilla/desktop-ng/)).
+
 ![NeoLine White](preview/neoline-2-white.png)
 
 An outline icon theme for KDE Plasma: 24 px grid, 1.7 px round strokes. Action icons follow the colour scheme;

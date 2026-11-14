@@ -199,7 +199,7 @@ MIMES = {
     "application-x-zstd-compressed-tar": ("file-archive", "arc"), "application-x-7z-compressed": ("file-archive", "arc"),
     "application-vnd.rar": ("file-archive", "arc"), "application-x-rar": ("file-archive", "arc"), "application-gzip": ("file-archive", "arc"),
     "application-x-bzip": ("file-archive", "arc"), "application-x-xz": ("file-archive", "arc"), "application-zstd": ("file-archive", "arc"),
-    "application-x-archive": ("file-archive", "arc"), "application-x-lzma": ("file-archive", "arc"), "application-x-cpio": ("file-archive", "arc"),
+    "application-x-archive": ("file-archive", "arc"), "package-x-generic": ("file-archive", "arc"), "application-x-lzma": ("file-archive", "arc"), "application-x-cpio": ("file-archive", "arc"),
     "application-pdf": ("file-pdf", "pdf"), "application-epub+zip": ("file-ebook", "book"), "application-postscript": ("file-pdf", "pdf"),
     "text-plain": ("file-text", "text"), "text-x-generic": ("file-text", "text"), "text-x-readme": ("file-text", "text"),
     "text-x-log": ("file-log", "text"), "text-markdown": ("file-markdown", "text"), "text-csv": ("file-sheet", "sheet"),
@@ -327,7 +327,7 @@ APPS = {
     "com.github.IsmaelMartinez.teams_for_linux": ("teams", "#7b83eb"), "teams-for-linux": ("teams", "#7b83eb"), "teams": ("teams", "#7b83eb"),
     "discord": ("discord", "#7289da"), "com.discordapp.Discord": ("discord", "#7289da"),
     "thunderbird": ("mail", "#3a8fd6"), "org.mozilla.Thunderbird": ("mail", "#3a8fd6"), "kmail": ("mail", "#4a8fe0"), "org.kde.kmail2": ("mail", "#4a8fe0"),
-    "internet-mail": ("mail", "#4a8fe0"), "evolution": ("mail", "#4a8fe0"),
+    "internet-mail": ("mail", "#4a8fe0"), "evolution": ("mail", "#4a8fe0"), "emblem-mail": ("mail", "#4a8fe0"),
     "preferences-system": ("settings", "#8fa0b3"), "systemsettings": ("settings", "#8fa0b3"), "org.kde.systemsettings": ("settings", "#8fa0b3"),
     "plasmadiscover": ("store", "#3fa6d9"), "org.kde.discover": ("store", "#3fa6d9"), "system-software-install": ("store", "#3fa6d9"), "org.gnome.Software": ("store", "#3fa6d9"),
     "accessories-calculator": ("calculator", "#c9a24d"), "kcalc": ("calculator", "#c9a24d"), "org.kde.kcalc": ("calculator", "#c9a24d"),
@@ -524,13 +524,18 @@ def main():
         build(theme)
 
 
+# what NeoLine falls back to for the icons it does not draw: Breeze on KDE, Adwaita on GNOME-like desktops (niri, Sway...)
+PORTABLE_INHERITS = ["breeze-dark", "breeze", "Adwaita", "hicolor"]
+
+
 def inherits():
-    """Breeze Dark, preceded by the local variants of it that are installed (they keep their own drawings as fallback)."""
+    """For the copy installed here: the local variants of Breeze Dark that are installed first (they keep their own
+    drawings as fallback), then the portable list. The copy in the repository gets the portable list only."""
     found = []
     for name in ("breeze-dark-mod-outline-places", "breeze-dark-mod"):
         if any(os.path.isdir(os.path.join(base, name)) for base in (os.path.expanduser("~/.local/share/icons"), "/usr/share/icons")):
             found.append(name)
-    return found + ["breeze-dark", "breeze", "hicolor"]
+    return found + PORTABLE_INHERITS
 
 
 def build(theme):
@@ -560,7 +565,7 @@ def build(theme):
         write(os.path.join(OUT, "scalable", "devices", name + ".svg"), svg(P[drawing], C[kind]))
     dirs = ["scalable/actions", "scalable/places", "scalable/mimetypes", "scalable/devices", "scalable/apps", "scalable/status"]
     index = ["[Icon Theme]", "Name=" + theme.replace("-", " "), "Comment=Outline icons in the style of the Dolphin NG cards",
-             "Inherits=" + ",".join(inherits()), "Example=folder", "FollowsColorScheme=true",
+             "Inherits=" + ",".join(PORTABLE_INHERITS), "Example=folder", "FollowsColorScheme=true",
              "Directories=" + ",".join(dirs), ""]
     for d in dirs:
         index += [f"[{d}]", "Size=24", "Type=Scalable", "MinSize=8", "MaxSize=512", "Context=" + {"mimetypes": "MimeTypes", "apps": "Applications"}.get(d.split("/")[1], d.split("/")[1].capitalize()), ""]
@@ -573,6 +578,11 @@ def build(theme):
             shutil.rmtree(INSTALL)
     os.makedirs(os.path.dirname(INSTALL), exist_ok=True)
     shutil.copytree(OUT, INSTALL)
+    local = os.path.join(INSTALL, "index.theme")
+    with open(local) as f:
+        text = f.read().replace("Inherits=" + ",".join(PORTABLE_INHERITS), "Inherits=" + ",".join(inherits()))
+    with open(local, "w") as f:
+        f.write(text)
     print(f"{len(sheet)} icons -> {OUT} and {INSTALL}")
 
     if "--sheet" in sys.argv and theme == "NeoLine":

@@ -1,0 +1,34 @@
+# Maintainer: Morzilla <3956663+Morzilla@users.noreply.github.com>
+# NeoLine, three outline icon themes (NeoLine, NeoLine-White, NeoLine-Yellow), from the latest commit on GitHub.
+
+pkgname=neoline-icons-git
+_name=neoline-icons
+pkgver=1.0.r0.g0000000
+pkgrel=1
+pkgdesc="Outline icon themes in three colours, for the NG desktop"
+arch=(any)
+url="https://github.com/Morzilla/neoline-icons"
+license=(MIT)
+makedepends=(git)
+optdepends=('breeze-icons: icons NeoLine does not draw')
+provides=($_name)
+conflicts=($_name)
+source=("$_name::git+$url.git")
+sha256sums=(SKIP)
+
+pkgver() {
+  cd $_name
+  printf "1.0.r%s.g%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+package() {
+  cd $_name
+  install -dm755 "$pkgdir/usr/share/icons"
+  local theme
+  for theme in NeoLine NeoLine-White NeoLine-Yellow; do
+    cp -a $theme "$pkgdir/usr/share/icons/"
+    # fall back on the Breeze themes, then Adwaita and hicolor
+    sed -i 's/^Inherits=.*/Inherits=breeze-dark,breeze,Adwaita,hicolor/' "$pkgdir/usr/share/icons/$theme/index.theme"
+  done
+  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}

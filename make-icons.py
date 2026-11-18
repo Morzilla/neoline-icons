@@ -96,6 +96,13 @@ P = {
     "view-sort-ascending": ["M5.5 19.5V5", "m9 8.5-3.5-3.5L2 8.5", "M11 7h3M11 12h5.5M11 17h8"],
     "view-sort-descending": ["M5.5 4.5V19", "m9 15.5-3.5 3.5L2 15.5", "M11 7h8M11 12h5.5M11 17h3"],
     "view-filter": ["M3.5 5.5h17l-6.5 7.5v5l-4 2v-7z"],
+    # groups: titled rows of items (Dolphin NG's Groups button)
+    "view-group": ["M4.5 4.5h15", "M4.5 7.5h4v3.5h-4zM10.5 7.5h4v3.5h-4z", "M4.5 14h15", "M4.5 17h4v3h-4zM10.5 17h4v3h-4z"],
+    "search": ["M10.5 4a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13z", "m15.5 15.5 4.5 4.5"],
+    "tab-close": ["m7 7 10 10M17 7 7 17"],
+    "folder-copy": ["M6.5 8.5A1.5 1.5 0 0 1 8 7h3l1.5 1.5H19A1.5 1.5 0 0 1 20.5 10v7.5A1.5 1.5 0 0 1 19 19H8a1.5 1.5 0 0 1-1.5-1.5z", "M3.5 15.5V6a1.5 1.5 0 0 1 1.5-1.5h3l1.5 1.5"],
+    "window-pin": ["M9.5 3.5h5l-1 5 3.5 3.5H7l3.5-3.5z", "M12 12v8.5"],
+    "window-unpin": ["M9.5 3.5h5l-1 5 3.5 3.5H7l3.5-3.5z", "M12 12v8.5", "M4 4l16 16"],
     "view-refresh": ["M4 12a8 8 0 0 1 13.7-5.6L20 8.5", "M20 3.5v5h-5", "M20 12a8 8 0 0 1-13.7 5.6L4 15.5", "M4 20.5v-5h5"],
     "view-preview": ["M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z", "M12 9.4a2.6 2.6 0 1 0 0 5.2 2.6 2.6 0 0 0 0-5.2z"],
     "view-hidden": ["M3 3l18 18", "M10 10.6a2.6 2.6 0 0 0 3.5 3.5", "M6.5 6.9C4 8.5 2.5 12 2.5 12s3.5 6 9.5 6c1.6 0 3-.4 4.2-1", "M9.5 6.3c.8-.2 1.6-.3 2.5-.3 6 0 9.5 6 9.5 6s-.9 1.6-2.6 3.1"],
@@ -387,7 +394,7 @@ def status_svg(paths, extra):
     return body.replace("</svg>", more + "</svg>")
 
 
-ACTIONS = [k for k in P if k not in APPS and k.startswith(("view-", "go-", "edit-", "folder-new", "document-", "list-", "dialog-", "window-", "tab-", "application-menu",
+ACTIONS = [k for k in P if k not in APPS and k.startswith(("view-", "go-", "search", "folder-copy", "edit-", "folder-new", "document-", "list-", "dialog-", "window-", "tab-", "application-menu",
                                           "configure", "zoom-", "bookmarks", "help-", "media-", "audio-", "mail-", "link", "emblem-", "show-menu", "overflow-menu",
                                           "process-stop", "kt-", "system-run", "preferences-", "tag", "flag", "rating", "image-x-generic-symbolic"))]
 

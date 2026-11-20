@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: MIT
-%global commit      99b35d5d9da2d53255ce806ed10729565a884ad4
+%global commit      9b05bf210597623879db746fc29501c41ac01365
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global snapdate    202611141222
+%global snapdate    202611201654
 
 Name:           neoline-icons
 Version:        1.0^%{snapdate}git%{shortcommit}
@@ -41,6 +41,9 @@ done
 %{_datadir}/icons/NeoLine-Yellow
 
 %changelog
+* Fri Nov 20 2026 Morzilla <3956663+Morzilla@users.noreply.github.com> - 1.0^202611201654git9b05bf2-1
+- Icons for Dolphin NG's bar: groups, search, tab close, copy to every folder, pin
+
 * Sat Nov 14 2026 Morzilla <3956663+Morzilla@users.noreply.github.com> - 1.0^202611141222git99b35d5-1
 - Symbolic icons (336): network, battery, volume, brightness, window buttons and more
 

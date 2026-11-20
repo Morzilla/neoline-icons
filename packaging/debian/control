@@ -1,0 +1,18 @@
+Source: neoline-icons
+Section: x11
+Priority: optional
+Maintainer: Morzilla <3956663+Morzilla@users.noreply.github.com>
+Build-Depends: debhelper-compat (= 13)
+Standards-Version: 4.7.0
+Homepage: https://github.com/Morzilla/neoline-icons
+Rules-Requires-Root: no
+
+Package: neoline-icons
+Architecture: all
+Depends: ${misc:Depends}
+Recommends: breeze-icon-theme
+Description: outline icon theme for KDE Plasma (NeoLine, NeoLine-White, NeoLine-Yellow)
+ NeoLine is a line icon theme made for the NG desktop: application, place,
+ mime type, action and symbolic icons drawn with one thin outline. Three
+ variants: NeoLine (follows the colour scheme), NeoLine-White and
+ NeoLine-Yellow. Icons it does not have fall back on Breeze.
